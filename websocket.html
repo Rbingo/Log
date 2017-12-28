@@ -1,0 +1,47 @@
+<html>
+<body>
+<div>
+    消息显示
+</div>
+<div id="message">
+
+</div>
+</body>
+<script>
+    if (window.WebSocket) {
+        console.log('This browser supports WebSocket');
+    } else {
+        console.log('This browser does not supports WebSocket');
+    }
+    var wsServer = 'ws://192.168.1.205:9504';
+    var websocket = new WebSocket(wsServer);
+    var message = document.getElementById("message");
+    websocket.onopen = function (evt) {
+        console.log("Connected to WebSocket server.");
+        var params = window.location.href.split('?')[1];
+        var id = 0;
+        if (params) {
+            var str = params.split('&')['0'];
+            id = str.split('=')[1];
+        }
+        websocket.send('{"type":2,"message":' + id + '}');
+    };
+
+    websocket.onclose = function (evt) {
+        console.log("Disconnected");
+    };
+
+    websocket.onmessage = function (evt) {
+        if (evt.data == 'pong') {
+            websocket.send('{"type":1,"message":"ping"}');
+        } else {
+            message.innerHTML += evt.data;//{"type":2,"message":"2"}
+            message.innerHTML += '<br>';
+        }
+    };
+
+    websocket.onerror = function (evt, e) {
+        console.log('Error occured: ' + evt.data);
+    };
+</script>
+</html>
