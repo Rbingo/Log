@@ -5,8 +5,8 @@
  * Date: 2017/12/27
  * Time: 20:20
  */
-function send($host, $message = '') {
-    $url = 'http://' . $host . ':9504';
+function send($host,$port , $message = '') {
+    $url = 'http://' . $host . ':'.$port;
     $ch  = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, true);
@@ -23,4 +23,4 @@ function send($host, $message = '') {
     return true;
 }
 
-send('192.168.1.205', '{"id":1,"message":"test"}');
+send('192.168.1.205',9504 ,'{"id":1,"message":"test"}');
