@@ -22,5 +22,5 @@ function send($host,$port , $message = '') {
     var_dump($txt);
     return true;
 }
-
+//13
 send('192.168.1.205',9504 ,'{"id":1,"message":"test"}');
